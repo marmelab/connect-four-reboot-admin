@@ -1,2 +1,2 @@
 # connect-four-reboot-admin
-Admin screens to 
+Connect-four-reboot game administration screens.
