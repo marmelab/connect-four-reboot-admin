@@ -10,8 +10,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
-const { Client } = pg;
-
 const client = new pg.Client({
   user: process.env.DATABASE_USER || "postgres",
   host: process.env.DATABASE_HOST || "localhost",
