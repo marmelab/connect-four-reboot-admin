@@ -63,7 +63,7 @@ make install
 Start the react-admin application in development mode by running:
 
 ```sh
-npm run dev
+make dev-ra
 ```
 
 ## Production connect-four-reboot-admin frontend
@@ -71,7 +71,7 @@ npm run dev
 Build the react-admin application in production mode by running:
 
 ```sh
-npm run build
+make build
 ```
 
 ## Misc
