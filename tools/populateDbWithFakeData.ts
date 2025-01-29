@@ -4,6 +4,7 @@ import { faker } from "@faker-js/faker";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import games from "./boardStateData.ts";
+
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
@@ -22,7 +23,6 @@ const client = new pg.Client({
 async function populateDatabase() {
   try {
     await client.connect();
-
     const leagueIds: number[] = [];
     for (let i = 0; i < 5; i++) {
       const leagueName = faker.company.name();
@@ -36,6 +36,7 @@ async function populateDatabase() {
     }
 
     const userIds: number[] = [];
+
     for (let i = 0; i < 10; i++) {
       const firstName = faker.person.firstName();
       const lastName = faker.person.lastName();
@@ -45,7 +46,6 @@ async function populateDatabase() {
       const leagueId = leagueIds[Math.floor(Math.random() * leagueIds.length)];
       const creationDate = faker.date.past();
       const lastConnectionDate = faker.date.recent();
-
       const res = await client.query(
         "INSERT INTO users (first_name, last_name, username, email, password_hash, league_id, creation_date, last_connection_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id",
         [
