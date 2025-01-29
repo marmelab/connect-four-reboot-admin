@@ -24,10 +24,10 @@ run-ra-dev: ## run the react-admin server.
 #################################
 
 run-postgrest-docker: ## run the postgrest docker-compose containing 2 dockers: postgres (db) & postgrest (api). The postgres docker start with a ready to use empty db.
+        docker-compose --env-file .env -f docker-compose.yml up --build -d
 
 stop-postgrest-docker: ## stop the postgrest docker-compose
 	docker-compose --env-file .env -f docker-compose.yml down
-	docker-compose --env-file .env -f docker-compose.yml up --build -d
 
 ## Database
 ###########
