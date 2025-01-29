@@ -3,16 +3,16 @@ import path from "path";
 import { faker } from "@faker-js/faker";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
+import games from "./boardStateData.ts";
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 const { Client } = pg;
-console.log(process.env.DATABASE_USER);
-// Configuration de la connexion à la base de données
+
 const client = new pg.Client({
-  user: process.env.DATABASE_USER || "postgres", // Utiliser des variables d'environnement pour la sécurité
+  user: process.env.DATABASE_USER || "postgres",
   host: process.env.DATABASE_HOST || "localhost",
   database: process.env.DATABASE_NAME || "mydatabase",
   password: process.env.DATABASE_PASSWORD || "password",
@@ -21,9 +21,8 @@ const client = new pg.Client({
 
 async function populateDatabase() {
   try {
-    await client.connect(); // Connexion à la base de données
+    await client.connect();
 
-    // Création de quelques ligues
     const leagueIds: number[] = [];
     for (let i = 0; i < 5; i++) {
       const leagueName = faker.company.name();
@@ -36,7 +35,7 @@ async function populateDatabase() {
       console.log(`League created: ${leagueName} in ${leagueLocation}`);
     }
 
-    // Création de quelques utilisateurs
+    const userIds: number[] = [];
     for (let i = 0; i < 10; i++) {
       const firstName = faker.person.firstName();
       const lastName = faker.person.lastName();
@@ -47,8 +46,8 @@ async function populateDatabase() {
       const creationDate = faker.date.past();
       const lastConnectionDate = faker.date.recent();
 
-      await client.query(
-        "INSERT INTO users (first_name, last_name, username, email, password_hash, league_id, creation_date, last_connection_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+      const res = await client.query(
+        "INSERT INTO users (first_name, last_name, username, email, password_hash, league_id, creation_date, last_connection_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id",
         [
           firstName,
           lastName,
@@ -60,20 +59,38 @@ async function populateDatabase() {
           lastConnectionDate,
         ],
       );
+      userIds.push(res.rows[0].id);
       console.log(`User created: ${firstName} ${lastName}`);
     }
 
-    // Création de quelques jeux
-    for (let i = 0; i < 5; i++) {
-      const firstPlayerId = Math.floor(Math.random() * 10) + 1;
-      const secondPlayerId = Math.floor(Math.random() * 10) + 1;
+    for (let i = 0; i < 25; i++) {
       const creationDate = faker.date.past();
       const lastUpdateDate = faker.date.recent();
-      const gameState = faker.helpers.arrayElement([
-        "waiting",
-        "in-progress",
-        "finished",
-      ]);
+      const isDraw = faker.datatype.boolean();
+      const randomGame = games[Math.floor(Math.random() * games.length)];
+      const secondPlayerId =
+        randomGame.winner === 2
+          ? randomGame.winner
+          : userIds[Math.floor(Math.random() * userIds.length)];
+
+      const firstPlayerId =
+        randomGame.winner === 1
+          ? randomGame.winner
+          : userIds[Math.floor(Math.random() * userIds.length)];
+
+      const gameState = JSON.stringify({
+        boardState: randomGame.boardState,
+        currentPlayer: randomGame.winner === 2 ? secondPlayerId : firstPlayerId,
+        victoryState: {
+          player: isDraw
+            ? null
+            : randomGame.winner === 1
+              ? firstPlayerId
+              : secondPlayerId,
+          fourLineCoordinates: isDraw ? [] : randomGame.fourLineCoordinates,
+          isDraw: randomGame.isDraw,
+        },
+      });
 
       await client.query(
         "INSERT INTO games (first_player_id, second_player_id, creation_date, last_update_date, game_state) VALUES ($1, $2, $3, $4, $5)",
@@ -94,9 +111,8 @@ async function populateDatabase() {
   } catch (error) {
     console.error("Error populating the database:", error);
   } finally {
-    await client.end(); // Fermer la connexion à la base de données
+    await client.end();
   }
 }
 
-// Exécuter la fonction de peuplement
 populateDatabase();

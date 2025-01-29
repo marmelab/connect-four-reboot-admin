@@ -11,10 +11,10 @@ help:
 install: ## install NPM dependencies
 	npm install
 
-clear: ## install NPM dependencies
+clear: ## Cleans up various build-related directories like dist, node_modules, and build for all apps
 	npm run clear
 
-build : ## run the react-admin server.
+build : ## build the react-admin server.
 	npm run build
 
 run-ra-dev: ## run the react-admin server.
