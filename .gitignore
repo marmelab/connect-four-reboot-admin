@@ -23,9 +23,3 @@ profile-*
 
 # vscode
 *code-workspace
-
-# generated code
-examples/typescript-server.js
-test/types/index.js
-
-
