@@ -41,6 +41,9 @@ drop-db: ## drop the postgres db inside the docker.
 create-model: ## create the connect-four-reboot-admin tables.
 	docker exec connect-four-reboot-admin-database-postgres-1 sh -c 'psql -U $(DATABASE_USER) -d $(DATABASE_NAME) -f /scripts/create_model.sql'
 
+populate-db: ## populate database with fake values
+	npx tsx tools/populateDbWithFakeData.ts
+
 ## Dev quality
 ##############
 

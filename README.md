@@ -31,6 +31,12 @@ You have to create the db tables runing:
 make create-model
 ```
 
+Next, you must generate fake data:
+
+```sh
+make populate-db
+```
+
 You can test the configuration runing:
 
 ```sh
