@@ -31,6 +31,12 @@ You have to create the db tables runing:
 make create-model
 ```
 
+Next, you must generate fake data:
+
+```sh
+make populate-db
+```
+
 You can test the configuration runing:
 
 ```sh
@@ -63,7 +69,7 @@ make install
 Start the react-admin application in development mode by running:
 
 ```sh
-make dev-ra
+make run-ra-dev
 ```
 
 ## Production connect-four-reboot-admin frontend

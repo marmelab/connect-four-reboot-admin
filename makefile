@@ -11,10 +11,10 @@ help:
 install: ## install NPM dependencies
 	npm install
 
-clear: ## install NPM dependencies
+clear: ## Cleans up various build-related directories like dist, node_modules, and build for all apps
 	npm run clear
 
-build : ## run the react-admin server.
+build : ## build the react-admin server.
 	npm run build
 
 run-ra-dev: ## run the react-admin server.
@@ -24,7 +24,7 @@ run-ra-dev: ## run the react-admin server.
 #################################
 
 run-postgrest-docker: ## run the postgrest docker-compose containing 2 dockers: postgres (db) & postgrest (api). The postgres docker start with a ready to use empty db.
-        docker-compose --env-file .env -f docker-compose.yml up --build -d
+	docker-compose --env-file .env -f docker-compose.yml up --build -d
 
 stop-postgrest-docker: ## stop the postgrest docker-compose
 	docker-compose --env-file .env -f docker-compose.yml down
@@ -43,6 +43,9 @@ drop-db: ## drop the postgres db inside the docker.
 
 create-model: ## create the connect-four-reboot-admin tables.
 	docker exec connect-four-reboot-admin-database-postgres-1 sh -c 'psql -U $(DATABASE_USER) -d $(DATABASE_NAME) -f /scripts/create_model.sql'
+
+populate-db: ## populate database with fake values
+	npx tsx tools/populateDbWithFakeData.ts
 
 ## Dev quality
 ##############

@@ -9,3 +9,25 @@ CREATE TABLE IF NOT EXISTS leagues (
     name VARCHAR(255) NOT NULL,
     location VARCHAR(255)
 );
+
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    league_id INT REFERENCES leagues(id) ON DELETE SET NULL,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_connection_date TIMESTAMP
+);
+
+
+CREATE TABLE IF NOT EXISTS games (
+    id SERIAL PRIMARY KEY,
+    first_player_id INT REFERENCES users(id) ON DELETE CASCADE,
+    second_player_id INT REFERENCES users(id) ON DELETE CASCADE,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    game_state VARCHAR(255) NOT NULL
+);
