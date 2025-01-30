@@ -29,9 +29,6 @@ run-postgrest-docker: ## run the postgrest docker-compose containing 2 dockers: 
 stop-postgrest-docker: ## stop the postgrest docker-compose
 	docker-compose --env-file .env -f docker-compose.yml down
 
-stop-postgrest-docker: ## stop the postgrest docker-compose
-	docker-compose --env-file .env -f docker-compose.yml down
-
 ## Database
 ###########
 
