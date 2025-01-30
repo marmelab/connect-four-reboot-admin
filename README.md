@@ -56,6 +56,14 @@ database with:
 make create-db
 ```
 
+tips:
+
+```sh
+make run
+```
+
+this goal do all for you.
+
 ## Installation connect-four-reboot-admin frontend
 
 Install the react-admin application dependencies by running:

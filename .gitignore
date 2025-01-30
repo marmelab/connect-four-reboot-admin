@@ -5,6 +5,7 @@ build
 coverage/
 .vscode
 .env
+.vite/
 
 # React Router
 /.react-router/

@@ -1,10 +1,24 @@
-import {
-  Admin,
-  Resource,
-  ListGuesser,
-  EditGuesser,
-  ShowGuesser,
-} from "react-admin";
-import { Layout } from "./Layout";
+import { Admin, Resource, fetchUtils } from "react-admin";
 
-export const App = () => <Admin layout={Layout}></Admin>;
+import postgrestRestProvider, {
+  IDataProviderConfig,
+  defaultPrimaryKeys,
+  defaultSchema,
+} from "@raphiniert/ra-data-postgrest";
+import { GameList } from "./games/GameList";
+
+const config: IDataProviderConfig = {
+  apiUrl: "http://localhost:3000",
+  httpClient: fetchUtils.fetchJson,
+  defaultListOp: "eq",
+  primaryKeys: defaultPrimaryKeys,
+  schema: defaultSchema,
+};
+
+const App = () => (
+  <Admin dataProvider={postgrestRestProvider(config)}>
+    <Resource name="games" list={GameList}></Resource>
+  </Admin>
+);
+
+export default App;

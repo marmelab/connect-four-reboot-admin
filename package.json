@@ -21,6 +21,8 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.0",
     "@mui/material": "^6.4.0",
+    "@raphiniert/ra-data-postgrest": "^2.4.1",
+    "@types/pg": "^8.11.11",
     "dotenv": "^16.4.7",
     "faker": "^6.6.6",
     "react": "^19.0.0",

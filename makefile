@@ -20,6 +20,15 @@ build : ## build the react-admin server.
 run-ra-dev: ## run the react-admin server.
 	npm run dev
 
+## Run
+########
+
+run: ## fresh run of all you need to use the app
+	make run-postgrest-docker && make create-model && make populate-db && make run-ra-dev
+
+stop: ## stop the docker
+	make stop-postgrest-docker
+
 ## Docker - postrgrest / postgres
 #################################
 
@@ -39,13 +48,18 @@ create-db: ## initialize an empty ready to use db inside the docker - use it onl
 	docker exec -i connect-four-reboot-admin-database-postgres-1 sh -c 'psql -U $(DATABASE_USER) -c "CREATE DATABASE $(DATABASE_NAME);"'
 
 drop-db: ## drop the postgres db inside the docker.
-	docker exec -i connect-four-reboot-admin-database-postgres-1 sh -c 'psql -U $(DATABASE_USER) -c "DROP DATABASE IF EXISTS $(DATABASE_NAME);"'
+	docker exec -i connect-four-reboot-admin-database-postgres-1 sh -c \
+'psql -U postgres -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '\''connect_four_reboot_admin'\'';"' && docker exec -i connect-four-reboot-admin-database-postgres-1 sh -c 'psql -U $(DATABASE_USER) -c "DROP DATABASE IF EXISTS $(DATABASE_NAME);"'
 
 create-model: ## create the connect-four-reboot-admin tables.
 	docker exec connect-four-reboot-admin-database-postgres-1 sh -c 'psql -U $(DATABASE_USER) -d $(DATABASE_NAME) -f /scripts/create_model.sql'
 
 populate-db: ## populate database with fake values
 	npx tsx tools/populateDbWithFakeData.ts
+
+reset-db: 
+	make drop-db && make create-db && make create-model && make populate-db
+
 
 ## Dev quality
 ##############
@@ -58,3 +72,4 @@ lint:  ## run linter
 
 format: ## run prettier
 	npm run format
+
