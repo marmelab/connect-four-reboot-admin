@@ -1,5 +1,6 @@
 import {
   Datagrid,
+  DateField,
   FunctionField,
   List,
   ReferenceField,
@@ -29,6 +30,7 @@ export const GameList = () => (
         <TextField source="username" />
       </ReferenceField>
       <FunctionField source="game_state" render={computeGameStatus} />
+      <DateField source="last_update_date" />
     </Datagrid>
   </List>
 );

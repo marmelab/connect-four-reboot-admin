@@ -39,7 +39,8 @@ create-db: ## initialize an empty ready to use db inside the docker - use it onl
 	docker exec -i connect-four-reboot-admin-database-postgres-1 sh -c 'psql -U $(DATABASE_USER) -c "CREATE DATABASE $(DATABASE_NAME);"'
 
 drop-db: ## drop the postgres db inside the docker.
-	docker exec -i connect-four-reboot-admin-database-postgres-1 sh -c 'psql -U $(DATABASE_USER) -c "DROP DATABASE IF EXISTS $(DATABASE_NAME);"'
+	docker exec -i connect-four-reboot-admin-database-postgres-1 sh -c \
+'psql -U postgres -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '\''connect_four_reboot_admin'\'';"' && docker exec -i connect-four-reboot-admin-database-postgres-1 sh -c 'psql -U $(DATABASE_USER) -c "DROP DATABASE IF EXISTS $(DATABASE_NAME);"'
 
 create-model: ## create the connect-four-reboot-admin tables.
 	docker exec connect-four-reboot-admin-database-postgres-1 sh -c 'psql -U $(DATABASE_USER) -d $(DATABASE_NAME) -f /scripts/create_model.sql'
@@ -58,3 +59,9 @@ lint:  ## run linter
 
 format: ## run prettier
 	npm run format
+
+run: 
+	make stop-postgrest-docker && make run-postgrest-docker && make drop-db && make create-db && make create-model && make populate-db && make run-ra-dev
+
+stop:
+	make stop-postgrest-docker
