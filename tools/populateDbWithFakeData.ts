@@ -10,13 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
-const client = new pg.Client({
-  user: process.env.DATABASE_USER || "postgres",
-  host: process.env.DATABASE_HOST || "localhost",
-  database: process.env.DATABASE_NAME || "mydatabase",
-  password: process.env.DATABASE_PASSWORD || "password",
-  port: parseInt(process.env.DATABASE_PORT || "5432", 10),
-});
+const client = new pg.Client(process.env.SUPABASE_DB_URL);
 
 async function populateDatabase() {
   try {
