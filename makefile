@@ -20,6 +20,15 @@ build : ## build the react-admin server.
 run-ra-dev: ## run the react-admin server.
 	npm run dev
 
+## Run
+########
+
+run: ## fresh run of all you need to use the app
+	make stop-postgrest-docker && make run-postgrest-docker && make drop-db && make create-db && make create-model && make populate-db && make run-ra-dev
+
+stop: ## stop the docker
+	make stop-postgrest-docker
+
 ## Docker - postrgrest / postgres
 #################################
 
@@ -60,8 +69,3 @@ lint:  ## run linter
 format: ## run prettier
 	npm run format
 
-run: 
-	make stop-postgrest-docker && make run-postgrest-docker && make drop-db && make create-db && make create-model && make populate-db && make run-ra-dev
-
-stop:
-	make stop-postgrest-docker
