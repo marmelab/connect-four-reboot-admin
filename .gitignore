@@ -1,0 +1,25 @@
+node_modules/
+dist/
+build
+.DS_Store
+coverage/
+.vscode
+.env
+
+# React Router
+/.react-router/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Optional npm cache directory
+.npm
+
+
+# 0x
+profile-*
+
+# vscode
+*code-workspace
