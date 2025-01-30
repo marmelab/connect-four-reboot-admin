@@ -1,11 +1,11 @@
-import { Admin, Resource, ListGuesser, fetchUtils } from "react-admin";
+import { Admin, Resource, fetchUtils } from "react-admin";
 
 import postgrestRestProvider, {
   IDataProviderConfig,
   defaultPrimaryKeys,
   defaultSchema,
 } from "@raphiniert/ra-data-postgrest";
-import { GameList } from "./games/games";
+import { GameList } from "./games/GameList";
 
 const config: IDataProviderConfig = {
   apiUrl: "http://localhost:3000",
@@ -17,7 +17,6 @@ const config: IDataProviderConfig = {
 
 const App = () => (
   <Admin dataProvider={postgrestRestProvider(config)}>
-    <Resource name="users" list={ListGuesser}></Resource>
     <Resource name="games" list={GameList}></Resource>
   </Admin>
 );

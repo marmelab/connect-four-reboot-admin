@@ -1,23 +1,11 @@
 import {
   Datagrid,
   DateField,
-  FunctionField,
   List,
   ReferenceField,
   TextField,
 } from "react-admin";
-
-enum GameStatus {
-  Ongoing = "Ongoing",
-  Finished = "Finished",
-}
-
-const computeGameStatus = (game: { game_state: string }): string => {
-  const gameState = JSON.parse(game.game_state);
-  return gameState.victoryState.player != null || gameState.victoryState?.isDraw
-    ? GameStatus.Finished
-    : GameStatus.Ongoing;
-};
+import { GameStatus } from "./GameStatus";
 
 export const GameList = () => (
   <List>
@@ -29,7 +17,7 @@ export const GameList = () => (
       <ReferenceField source="second_player_id" reference="users">
         <TextField source="username" />
       </ReferenceField>
-      <FunctionField source="game_state" render={computeGameStatus} />
+      <GameStatus></GameStatus>
       <DateField source="last_update_date" />
     </Datagrid>
   </List>

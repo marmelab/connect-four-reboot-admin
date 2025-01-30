@@ -24,7 +24,7 @@ run-ra-dev: ## run the react-admin server.
 ########
 
 run: ## fresh run of all you need to use the app
-	make stop-postgrest-docker && make run-postgrest-docker && make drop-db && make create-db && make create-model && make populate-db && make run-ra-dev
+	make make run-postgrest-docker && make create-model && make populate-db && make run-ra-dev
 
 stop: ## stop the docker
 	make stop-postgrest-docker
@@ -56,6 +56,10 @@ create-model: ## create the connect-four-reboot-admin tables.
 
 populate-db: ## populate database with fake values
 	npx tsx tools/populateDbWithFakeData.ts
+
+reset-db: 
+	make drop-db && make create-db && make create-model && make populate-db
+
 
 ## Dev quality
 ##############
