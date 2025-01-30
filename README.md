@@ -3,66 +3,23 @@
 Connect-four-reboot game administration using:
 
 - react-admin as a frontEnd typescript app
-- postgrest inside a docker, as a standalone web server that turns a PostgreSQL database directly into a RESTful API.
+- postgrest with Supabase, an opensource Firebase alternative.
 
 To run connect-four-reboot-admin, you have to run the both components.
 
-The postgrest docker-compose contains two dockers:
-
-- postgres
-- postgrest
-
 ## Run the connect-four-reboot-admin api (postrgrest)
 
-Copy the .env.sample file to create your development environment file .env
-You have to configure the port, the username and password for the postgrest configuration.
+Copy the .env.sample file to create your development environment file .env: if you use default configs, you just have to put your supabase anon key.
 
 Then run:
-
-```sh
-make run-postgrest-docker
-```
-
-The docker start with an empty, ready to use, database.
-
-You have to create the db tables runing:
-
-```sh
-make create-model
-```
-
-Next, you must generate fake data:
-
-```sh
-make populate-db
-```
-
-You can test the configuration runing:
-
-```sh
-make connect-db
-```
-
-If necessary, for dev purpose you have the ability to drop and recreate the
-database with:
-
-```sh
-make drop-db
-```
-
-database with:
-
-```sh
-make create-db
-```
-
-tips:
 
 ```sh
 make run
 ```
 
-this goal do all for you.
+Supbase start with a populate, ready to use database.
+
+If you want go into details, you have several goals in the makefile related to supabase. Please see [the makefile](makefile).
 
 ## Installation connect-four-reboot-admin frontend
 
