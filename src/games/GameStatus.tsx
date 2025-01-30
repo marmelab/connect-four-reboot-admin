@@ -2,8 +2,8 @@ import { Box, Tooltip, Typography } from "@mui/material";
 import { useFieldValue } from "react-admin";
 
 const Status = {
-  Ongoing: { label: "Ongoing", color: "green" },
-  Finished: { label: "Finished", color: "red" },
+  Ongoing: { label: "Ongoing", color: "#4CAF50" },
+  Finished: { label: "Finished", color: "#9E9E9E" },
 } as const;
 
 export const GameStatus = () => {

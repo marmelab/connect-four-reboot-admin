@@ -24,7 +24,7 @@ run-ra-dev: ## run the react-admin server.
 ########
 
 run: ## fresh run of all you need to use the app
-	make make run-postgrest-docker && make create-model && make populate-db && make run-ra-dev
+	make run-postgrest-docker && make create-model && make populate-db && make run-ra-dev
 
 stop: ## stop the docker
 	make stop-postgrest-docker

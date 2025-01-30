@@ -4,6 +4,7 @@ import {
   List,
   ReferenceField,
   TextField,
+  WrapperField,
 } from "react-admin";
 import { GameStatus } from "./GameStatus";
 
@@ -17,7 +18,9 @@ export const GameList = () => (
       <ReferenceField source="second_player_id" reference="users">
         <TextField source="username" />
       </ReferenceField>
-      <GameStatus></GameStatus>
+      <WrapperField label="Game status">
+        <GameStatus />
+      </WrapperField>
       <DateField source="last_update_date" />
     </Datagrid>
   </List>
