@@ -10,17 +10,21 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
-const client = new pg.Client({
-  user: process.env.DATABASE_USER || "postgres",
-  host: process.env.DATABASE_HOST || "localhost",
-  database: process.env.DATABASE_NAME || "mydatabase",
-  password: process.env.DATABASE_PASSWORD || "password",
-  port: parseInt(process.env.DATABASE_PORT || "5432", 10),
-});
+const client = new pg.Client(process.env.SUPABASE_DB_URL);
 
 async function populateDatabase() {
   try {
     await client.connect();
+
+    console.log("Delete existing data and reset ids...");
+    await client.query("DELETE FROM games");
+    await client.query("DELETE FROM users");
+    await client.query("DELETE FROM leagues");
+
+    await client.query("ALTER SEQUENCE leagues_id_seq RESTART WITH 1");
+    await client.query("ALTER SEQUENCE users_id_seq RESTART WITH 1");
+    await client.query("ALTER SEQUENCE games_id_seq RESTART WITH 1");
+
     const leagueIds: number[] = [];
     for (let i = 0; i < 5; i++) {
       const leagueName = faker.company.name();

@@ -1,4 +1,10 @@
-CREATE ROLE web_anon NOLOGIN;
+DO $$ 
+BEGIN 
+  IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'web_anon') THEN 
+    CREATE ROLE web_anon;
+  END IF;
+END $$;
+
 GRANT USAGE ON SCHEMA public TO web_anon;
 
 ALTER DEFAULT PRIVILEGES IN SCHEMA public

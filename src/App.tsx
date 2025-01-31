@@ -1,24 +1,52 @@
-import { Admin, Resource, fetchUtils } from "react-admin";
-
-import postgrestRestProvider, {
-  IDataProviderConfig,
-  defaultPrimaryKeys,
-  defaultSchema,
-} from "@raphiniert/ra-data-postgrest";
+import { Admin, Resource } from "react-admin";
 import { GameList } from "./games/GameList";
+import { supabaseDataProvider } from "ra-supabase";
+import { createClient } from "@supabase/supabase-js";
+import { Box, Typography } from "@mui/material";
 
-const config: IDataProviderConfig = {
-  apiUrl: "http://localhost:3000",
-  httpClient: fetchUtils.fetchJson,
-  defaultListOp: "eq",
-  primaryKeys: defaultPrimaryKeys,
-  schema: defaultSchema,
+const instanceUrl =
+  import.meta.env.VITE_SUPABASE_API_URL || "http://127.0.0.1:54321";
+const apiKey = import.meta.env.VITE_SUPABASE_API_KEY;
+
+if (!apiKey) {
+  console.error("VITE_SUPABASE_API_KEY is not set.");
+}
+
+const supabaseClient = apiKey ? createClient(instanceUrl, apiKey) : null;
+const dataProvider =
+  apiKey && supabaseClient
+    ? supabaseDataProvider({
+        instanceUrl,
+        apiKey,
+        supabaseClient,
+      })
+    : null;
+
+const App = () => {
+  if (!dataProvider) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+        textAlign="center"
+      >
+        <Typography variant="h6" color="error">
+          Error: VITE_SUPABASE_API_KEY is not set.
+          <br />
+          Please check your environment variables in .env file (see
+          .env.sample).
+        </Typography>
+      </Box>
+    );
+  }
+
+  return (
+    <Admin dataProvider={dataProvider}>
+      <Resource name="games" list={GameList}></Resource>
+    </Admin>
+  );
 };
-
-const App = () => (
-  <Admin dataProvider={postgrestRestProvider(config)}>
-    <Resource name="games" list={GameList}></Resource>
-  </Admin>
-);
 
 export default App;
