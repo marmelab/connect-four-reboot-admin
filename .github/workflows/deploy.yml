@@ -22,8 +22,10 @@ jobs:
         run: npm install
 
       - name: Link Supabase
+        env:
+          SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
         run: |
-          npx supabase link --project-ref ${{ vars.SUPABASE_PROJECT_REF }}
+          npx supabase link --project-ref $SUPABASE_PROJECT_REF
 
         #Deploy supabase
       - name: Run Docker Compose
