@@ -22,21 +22,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Link Supabase
+      - name: Link Supabase && init db && populate
         env:
           SUPABASE_PROJECT_REF: ${{ env.SUPABASE_PROJECT_REF }}
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-        run: |
-          npx supabase link --project-ref dtdsoudleeheckhqyqsk
-
-        #Deploy supabase
-      - name: Run Docker Compose
-        run: |
-          npm run supabase:remote:init
-
-      #Populate db
-      - name: Populate DB
-        env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
+          npx supabase link --project-ref dtdsoudleeheckhqyqsk 
+          npm run supabase:remote:init
           npx tsx tools/populateDbWithFakeData.ts
