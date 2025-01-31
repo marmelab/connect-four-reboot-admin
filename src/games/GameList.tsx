@@ -1,15 +1,24 @@
 import {
+  AutocompleteInput,
   Datagrid,
   DateField,
   List,
+  ReferenceInput,
+  SearchInput,
   TextField,
-  TextInput,
   WrapperField,
 } from "react-admin";
 import { GameStatus } from "./GameStatus";
 
+const filterToQuery = (searchText: any) => ({
+  "username@ilike": `%${searchText}%`,
+});
+
 const postFilters = [
-  <TextInput source="_players@ilike" label="Search a player" alwaysOn />,
+  <SearchInput source="_players@ilike" alwaysOn />,
+  <ReferenceInput source="winner_id" reference="users" alwaysOn>
+    <AutocompleteInput filterToQuery={filterToQuery} optionText="username" />
+  </ReferenceInput>,
 ];
 
 export const GameList = () => (
