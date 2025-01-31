@@ -14,7 +14,8 @@
     "type-check": "tsc --noEmit",
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx ./src",
     "format": "prettier --write ./src",
-    "clear": "rm -rf node_modules"
+    "clear": "rm -rf node_modules",
+    "supabase:remote:init": "yes | npx supabase db reset --linked && yes | npx supabase db push --include-all"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

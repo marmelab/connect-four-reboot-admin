@@ -1,0 +1,26 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      #Deploy supabase
+      - name: Run Docker Compose
+        run: |
+          npm run supabase:remote:init
+
+      #Populate db
+      - name: Populate DB
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          npx tsx tools/populateDbWithFakeData.ts
