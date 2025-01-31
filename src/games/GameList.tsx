@@ -2,13 +2,15 @@ import {
   Datagrid,
   DateField,
   List,
-  SearchInput,
   TextField,
+  TextInput,
   WrapperField,
 } from "react-admin";
 import { GameStatus } from "./GameStatus";
 
-const postFilters = [<SearchInput source="first_player" alwaysOn />];
+const postFilters = [
+  <TextInput source="_players@ilike" label="Search a player" alwaysOn />,
+];
 
 export const GameList = () => (
   <List filters={postFilters}>
