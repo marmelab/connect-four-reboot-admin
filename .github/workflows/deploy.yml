@@ -22,9 +22,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Build the project
+        run: npm run build
+
       - name: Link Supabase && init db && populate
         env:
-          SUPABASE_PROJECT_REF: ${{ env.SUPABASE_PROJECT_REF }}
+          SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
