@@ -25,7 +25,7 @@ run-ra-dev: ## run the react-admin server.
 ########
 
 run: ## fresh run of all you need to use the app
-	make start-supabase && make supabase-migrate-database && make supabase-populate
+	make start-supabase && make supabase-migrate-database && make run-ra-dev
 
 stop: ## stop the docker
 	make stop-supabase

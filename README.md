@@ -9,25 +9,26 @@ To run connect-four-reboot-admin, you have to run the both components.
 
 ## Run the connect-four-reboot-admin api (postrgrest)
 
-Copy the .env.sample file to create your development environment file .env: if you use default configs, you just have to put your supabase anon key.
+First install the app with :
 
-Then run:
+```sh
+make install
+```
+
+Then, Copy the .env.sample file to create your development environment file .env: if you use default configs, you just have to put your supabase anon key.
+
+Now run:
 
 ```sh
 make run
 ```
 
-Supbase start with a populate, ready to use database.
+This command will start both components:
+
+- Supbase with a populated, ready to use database
+- react-admin front end vite server
 
 If you want go into details, you have several goals in the makefile related to supabase. Please see [the makefile](makefile).
-
-## Installation connect-four-reboot-admin frontend
-
-Install the react-admin application dependencies by running:
-
-```sh
-make install
-```
 
 ## Development connect-four-reboot-admin frontend
 

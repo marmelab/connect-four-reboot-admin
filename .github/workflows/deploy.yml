@@ -1,4 +1,4 @@
-name: Deploy to EC2
+name: Deploy to prod
 
 on:
   push:
@@ -28,5 +28,5 @@ jobs:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
-          npx supabase link --project-ref dtdsoudleeheckhqyqsk 
+          npx supabase link --project-ref $SUPABASE_PROJECT_REF 
           npx tsx tools/populateDbWithFakeData.ts
