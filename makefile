@@ -48,10 +48,6 @@ supabase-reset-database: ## reset (and clear!) the database
 supabase-populate: ## populate database with fake values
 	npx tsx tools/populateDbWithFakeData.ts
 
-supabase-connect: ## connect into the supabase postgres docker.
-	docker exec -it ${SUPABASE_DOCKER_NAME} sh -c 'psql -U $(SUPABASE_USER) -d $(SUPABASE_DBNAME)'
-
-
 ## Dev quality
 ##############
 
