@@ -13,7 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      #Deploy supabase
+      - name: Link Supabase
+        env:
+          SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
+        run: |
+          npx supabase link --project-ref $SUPABASE_PROJECT_REF
+
+        #Deploy supabase
       - name: Run Docker Compose
         run: |
           npm run supabase:remote:init
