@@ -9,10 +9,8 @@ const Status = {
 export const GameStatus = () => {
   const gameState = useFieldValue({ source: "game_state" });
 
-  const gameStateVal = JSON.parse(gameState);
   const status =
-    gameStateVal.victoryState.player != null ||
-    gameStateVal.victoryState?.isDraw
+    gameState.victoryState.player != null || gameState.victoryState?.isDraw
       ? Status.Finished
       : Status.Ongoing;
 
