@@ -25,7 +25,7 @@ jobs:
         env:
           SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
         run: |
-          npx supabase link --project-ref $SUPABASE_PROJECT_REF
+          npx supabase link --project-ref dtdsoudleeheckhqyqsk
 
         #Deploy supabase
       - name: Run Docker Compose
