@@ -15,7 +15,7 @@ First install the app with :
 make install
 ```
 
-Then, Copy the .env.sample file to create your development environment file .env: if you use default configs, you just have to put your supabase anon key.
+Then, copy the .env.sample file to create your development environment file .env.
 
 Now run:
 
