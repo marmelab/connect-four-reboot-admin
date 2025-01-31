@@ -5,7 +5,7 @@ import { createClient } from "@supabase/supabase-js";
 import { Box, Typography } from "@mui/material";
 
 const instanceUrl =
-  import.meta.env.VITE_SUPABASE_URL || "http://127.0.0.1:54321";
+  import.meta.env.VITE_SUPABASE_API_URL || "http://127.0.0.1:54321";
 const apiKey = import.meta.env.VITE_SUPABASE_API_KEY;
 
 if (!apiKey) {
