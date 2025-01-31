@@ -29,5 +29,5 @@ jobs:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
           npx supabase link --project-ref dtdsoudleeheckhqyqsk 
-          yes | npx supabase db reset --linked --db-url $SUPABASE_DB_URL
+          yes | npx supabase db reset --debug --linked --db-url $SUPABASE_DB_URL
           npx tsx tools/populateDbWithFakeData.ts
