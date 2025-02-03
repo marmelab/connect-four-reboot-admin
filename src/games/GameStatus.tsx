@@ -6,13 +6,16 @@ const Status = {
   Finished: { label: "Finished", color: "#9E9E9E" },
 } as const;
 
+export const statusChoices = Object.entries(Status).map(([key, value]) => ({
+  id: key,
+  name: value.label,
+}));
+
 export const GameStatus = () => {
-  const gameState = useFieldValue({ source: "game_state" });
+  const gameStatus = useFieldValue({ source: "_game_status" });
 
   const status =
-    gameState.victoryState.player != null || gameState.victoryState?.isDraw
-      ? Status.Finished
-      : Status.Ongoing;
+    gameStatus === Status.Finished.label ? Status.Finished : Status.Ongoing;
 
   return (
     <>

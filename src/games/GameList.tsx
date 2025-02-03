@@ -5,10 +5,11 @@ import {
   List,
   ReferenceInput,
   SearchInput,
+  SelectInput,
   TextField,
   WrapperField,
 } from "react-admin";
-import { GameStatus } from "./GameStatus";
+import { GameStatus, statusChoices } from "./GameStatus";
 
 const filterToQuery = (searchText: any) => ({
   "username@ilike": `%${searchText}%`,
@@ -19,6 +20,12 @@ const postFilters = [
   <ReferenceInput source="winner_id" reference="users" alwaysOn>
     <AutocompleteInput filterToQuery={filterToQuery} optionText="username" />
   </ReferenceInput>,
+  <SelectInput
+    label="Game status"
+    source="_game_status"
+    choices={statusChoices}
+    alwaysOn
+  />,
 ];
 
 export const GameList = () => (

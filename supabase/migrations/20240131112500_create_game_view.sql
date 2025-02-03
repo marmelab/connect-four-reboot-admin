@@ -12,7 +12,14 @@ CREATE VIEW games_view AS
         g.creation_date,
         g.last_update_date,
         g.game_state,
-        CONCAT(u1.username,' ',u2.username) as _players
+        CONCAT(u1.username,' ',u2.username) as _players,
+        CASE
+            WHEN (g.game_state->'victoryState'->>'player') IS NOT NULL
+                 OR COALESCE((g.game_state->'victoryState'->>'isDraw')::BOOLEAN, FALSE) = TRUE
+            THEN 'Finished'
+            ELSE 'Ongoing'
+        END as _game_status
+
     FROM games g
     LEFT JOIN users as u1 on first_player_id=u1.id
     LEFT JOIN users as u2 on second_player_id=u2.id
