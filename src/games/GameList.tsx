@@ -1,27 +1,45 @@
 import {
+  AutocompleteInput,
   Datagrid,
   DateField,
   List,
-  ReferenceField,
+  ReferenceInput,
+  SearchInput,
+  SelectInput,
   TextField,
   WrapperField,
 } from "react-admin";
-import { GameStatus } from "./GameStatus";
+import { GameStatus, statusChoices } from "./GameStatus";
+
+const filterToQuery = (searchText: any) => ({
+  "username@ilike": `%${searchText}%`,
+});
+
+const postFilters = [
+  <SearchInput source="_players@ilike" alwaysOn />,
+  <ReferenceInput source="winner_id" reference="users" alwaysOn>
+    <AutocompleteInput filterToQuery={filterToQuery} optionText="username" />
+  </ReferenceInput>,
+  <SelectInput
+    label="Game status"
+    source="_game_status"
+    choices={statusChoices}
+    alwaysOn
+  />,
+];
 
 export const GameList = () => (
-  <List>
+  <List filters={postFilters}>
     <Datagrid>
       <TextField source="id" />
-      <ReferenceField source="first_player_id" reference="users">
-        <TextField source="username" />
-      </ReferenceField>
-      <ReferenceField source="second_player_id" reference="users">
-        <TextField source="username" />
-      </ReferenceField>
+      <TextField source="first_player" label="First player" />
+      <TextField source="second_player" label="Second player" />
       <WrapperField label="Game status">
         <GameStatus />
       </WrapperField>
-      <DateField source="last_update_date" />
+      <TextField source="winner" label="Winner" />
+      <DateField source="creation_date" label="Game creation date" />
+      <DateField source="last_update_date" label="Game last update date" />
     </Datagrid>
   </List>
 );
