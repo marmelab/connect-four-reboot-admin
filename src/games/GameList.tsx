@@ -6,6 +6,7 @@ import {
   ReferenceInput,
   SearchInput,
   SelectInput,
+  ShowButton,
   TextField,
   WrapperField,
 } from "react-admin";
@@ -40,6 +41,7 @@ export const GameList = () => (
       <TextField source="winner" label="Winner" />
       <DateField source="creation_date" label="Game creation date" />
       <DateField source="last_update_date" label="Game last update date" />
+      <ShowButton />
     </Datagrid>
   </List>
 );

@@ -38,7 +38,7 @@ jobs:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
           npx supabase link --project-ref $SUPABASE_PROJECT_REF 
-          npx tsx tools/populateDbWithFakeData.ts
+          npx supabase db push
 
       - name: Upload to GitHub Pages
         uses: actions/upload-pages-artifact@v3
