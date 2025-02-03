@@ -6,16 +6,17 @@ const games = [
       [0, 0, 0, 1, 0, 0, 0],
       [0, 0, 0, 1, 0, 0, 0],
       [0, 0, 0, 1, 2, 0, 0],
-      [2, 2, 0, 1, 1, 0, 0],
+      [2, 2, 2, 1, 1, 0, 0],
     ],
     fourLineCoordinates: [
-      [2, 3],
+      [3, 2],
       [3, 3],
-      [4, 3],
-      [5, 3],
+      [3, 4],
+      [3, 5],
     ],
     isDraw: false,
     winner: 1,
+    currentPlayer: 1,
   },
 
   {
@@ -24,17 +25,18 @@ const games = [
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 1, 1, 0, 0],
+      [0, 0, 1, 1, 1, 0, 0],
       [0, 2, 2, 2, 2, 1, 0],
     ],
     fourLineCoordinates: [
-      [5, 1],
-      [5, 2],
-      [5, 3],
-      [5, 4],
+      [1, 5],
+      [2, 5],
+      [3, 5],
+      [4, 5],
     ],
     isDraw: false,
     winner: 2,
+    currentPlayer: 2,
   },
 
   {
@@ -49,6 +51,7 @@ const games = [
     fourLineCoordinates: [],
     isDraw: true,
     winner: 0,
+    currentPlayer: 2,
   },
 
   {
@@ -63,6 +66,7 @@ const games = [
     fourLineCoordinates: [],
     isDraw: false,
     winner: 0,
+    currentPlayer: 2,
   },
 
   {
@@ -77,6 +81,7 @@ const games = [
     fourLineCoordinates: [],
     isDraw: false,
     winner: 0,
+    currentPlayer: 2,
   },
 ];
 

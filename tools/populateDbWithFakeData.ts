@@ -12,6 +12,12 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 const client = new pg.Client(process.env.SUPABASE_DB_URL);
 
+const generateSimpleUsername = () => {
+  const name = faker.person.firstName().toLowerCase().slice(0, 5); // Prénom en minuscule
+  const number = faker.number.int({ min: 10, max: 99 }); // Petit nombre
+  return `${name}${number}`;
+};
+
 async function populateDatabase() {
   try {
     await client.connect();
@@ -39,10 +45,10 @@ async function populateDatabase() {
 
     const userIds: number[] = [];
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 50; i++) {
       const firstName = faker.person.firstName();
       const lastName = faker.person.lastName();
-      const username = faker.internet.username();
+      const username = generateSimpleUsername();
       const email = faker.internet.email();
       const passwordHash = faker.internet.password();
       const leagueId = leagueIds[Math.floor(Math.random() * leagueIds.length)];
@@ -65,32 +71,31 @@ async function populateDatabase() {
       console.log(`User created: ${firstName} ${lastName}`);
     }
 
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 200; i++) {
       const creationDate = faker.date.past();
       const lastUpdateDate = faker.date.recent();
-      const isDraw = faker.datatype.boolean();
       const randomGame = games[Math.floor(Math.random() * games.length)];
-      const secondPlayerId =
-        randomGame.winner === 2
-          ? randomGame.winner
-          : userIds[Math.floor(Math.random() * userIds.length)];
-
-      const firstPlayerId =
-        randomGame.winner === 1
-          ? randomGame.winner
-          : userIds[Math.floor(Math.random() * userIds.length)];
+      const isDraw = randomGame.isDraw;
+      const firstPlayerId = userIds[Math.floor(Math.random() * userIds.length)];
+      let secondPlayerId = 0;
+      do {
+        secondPlayerId = userIds[Math.floor(Math.random() * userIds.length)];
+      } while (secondPlayerId === firstPlayerId);
+      const winnerId =
+        randomGame.winner === 0
+          ? null
+          : randomGame.winner === 1
+            ? firstPlayerId
+            : secondPlayerId;
 
       const gameState = JSON.stringify({
         boardState: randomGame.boardState,
-        currentPlayer: randomGame.winner === 2 ? secondPlayerId : firstPlayerId,
+        currentPlayer:
+          randomGame.currentPlayer === 1 ? firstPlayerId : secondPlayerId,
         victoryState: {
-          player: isDraw
-            ? null
-            : randomGame.winner === 1
-              ? firstPlayerId
-              : secondPlayerId,
-          fourLineCoordinates: isDraw ? [] : randomGame.fourLineCoordinates,
-          isDraw: randomGame.isDraw,
+          player: winnerId,
+          fourLineCoordinates: randomGame.fourLineCoordinates,
+          isDraw: isDraw,
         },
       });
 
