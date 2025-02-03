@@ -6,6 +6,7 @@ import {
   ReferenceInput,
   SearchInput,
   SelectInput,
+  ShowButton,
   TextField,
   WrapperField,
 } from "react-admin";
@@ -32,6 +33,7 @@ export const GameList = () => (
   <List filters={postFilters}>
     <Datagrid>
       <TextField source="id" />
+      <ShowButton />
       <TextField source="first_player" label="First player" />
       <TextField source="second_player" label="Second player" />
       <WrapperField label="Game status">

@@ -3,6 +3,7 @@ import { GameList } from "./games/GameList";
 import { supabaseDataProvider } from "ra-supabase";
 import { createClient } from "@supabase/supabase-js";
 import { Box, Typography } from "@mui/material";
+import { GameShow } from "./games/GameShow";
 
 const instanceUrl =
   import.meta.env.VITE_SUPABASE_API_URL || "http://127.0.0.1:54321";
@@ -47,6 +48,7 @@ const App = () => {
       <Resource
         name="games_view"
         list={GameList}
+        show={GameShow}
         options={{ label: "Games" }}
       ></Resource>
     </Admin>
