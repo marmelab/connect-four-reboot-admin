@@ -44,7 +44,11 @@ const App = () => {
 
   return (
     <Admin dataProvider={dataProvider}>
-      <Resource name="games_view" list={GameList}></Resource>
+      <Resource
+        name="games_view"
+        list={GameList}
+        options={{ label: "Game" }}
+      ></Resource>
     </Admin>
   );
 };
