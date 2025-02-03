@@ -17,7 +17,6 @@ const GameStatusField = () => {
   if (!gameStatus || !victoryState || !p1 || !p2) {
     return "Loading game status field ...";
   }
-  console.log(victoryState, p1, p2);
 
   if (victoryState.isDraw) {
     return (
