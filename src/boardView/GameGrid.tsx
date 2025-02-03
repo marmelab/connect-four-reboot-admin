@@ -11,7 +11,7 @@ const GameGrid = ({ boardState, victoryState }: GameGridProps) => {
   const columns = transpose(boardState);
 
   return (
-    <div>
+    <div id="game-grid-container">
       <div id="game-grid">
         <div id="grid-container">
           {columns.map((_, index) => (
