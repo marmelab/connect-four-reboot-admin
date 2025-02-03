@@ -16,6 +16,9 @@ const MatchupField = () => {
 
 const GameStatusField = () => {
   const gameStatus = useFieldValue({ source: "_game_status" });
+  if (!gameStatus) {
+    return "Loading game status field ...";
+  }
   return (
     <Typography sx={{ textAlign: "center" }}>
       The match status is: <b>{gameStatus}</b>.
@@ -26,9 +29,8 @@ const GameStatusField = () => {
 const GameBoardView = () => {
   const victoryState = useFieldValue({ source: "_victory_state" });
   const boardState = useFieldValue({ source: "board_state" });
-  console.log(victoryState, boardState);
   if (!victoryState || !boardState) {
-    return "";
+    return "Loading game board view ...";
   }
   return <GameGrid victoryState={victoryState} boardState={boardState} />;
 };
