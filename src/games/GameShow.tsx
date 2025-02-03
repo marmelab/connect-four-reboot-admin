@@ -2,27 +2,65 @@ import Typography from "@mui/material/Typography/Typography";
 import { Show, SimpleShowLayout, TextField, useFieldValue } from "react-admin";
 import GameGrid from "../boardView/GameGrid";
 import { tokenColors } from "../boardView/model/consts";
+import { Status } from "./GameStatus";
+import { PlayerNum } from "../boardView/model/types";
+import Tooltip from "@mui/material/Tooltip/Tooltip";
+import Box from "@mui/material/Box/Box";
 
-const MatchupField = () => {
+const GameStatusField = () => {
+  const gameStatus = useFieldValue({ source: "_game_status" });
+  const victoryState = useFieldValue({ source: "_victory_state" });
   const p1 = useFieldValue({ source: "first_player" });
   const p2 = useFieldValue({ source: "second_player" });
+  const winner = victoryState.player === PlayerNum.p1 ? p1 : p2;
+
+  if (!gameStatus || !victoryState || !p1 || !p2) {
+    return "Loading game status field ...";
+  }
+  console.log(victoryState, p1, p2);
+
+  if (victoryState.isDraw) {
+    return (
+      <Typography>
+        <b>{gameStatus}</b> - it's a draw.
+      </Typography>
+    );
+  }
+  if (gameStatus === Status.Finished.label) {
+    return (
+      <Typography>
+        <b>{gameStatus}</b> - Winner: <b>{winner}</b>
+      </Typography>
+    );
+  }
   return (
-    <Typography variant="h6" sx={{ textAlign: "center" }}>
-      <span className={tokenColors[1]}>{p1}</span> <b>vs</b>{" "}
-      <span className={tokenColors[2]}>{p2}</span>
+    <Typography>
+      <b>{gameStatus}</b>
     </Typography>
   );
 };
 
-const GameStatusField = () => {
-  const gameStatus = useFieldValue({ source: "_game_status" });
-  if (!gameStatus) {
-    return "Loading game status field ...";
+const PlayerField = ({ playerNum }: { playerNum: PlayerNum }) => {
+  const p1 = useFieldValue({ source: "first_player" });
+  const p2 = useFieldValue({ source: "second_player" });
+  if (!p1 || !p2) {
+    return "Laoding players ...";
   }
   return (
-    <Typography sx={{ textAlign: "center" }}>
-      The match status is: <b>{gameStatus}</b>.
-    </Typography>
+    <Tooltip title="player" placement="top">
+      <Box display="flex" alignItems="center">
+        <Box
+          width={10}
+          height={10}
+          borderRadius="50%"
+          className={tokenColors[playerNum]}
+          marginRight={1}
+        />
+        <Typography variant="body2">
+          {playerNum === PlayerNum.p1 ? p1 : p2}
+        </Typography>
+      </Box>
+    </Tooltip>
   );
 };
 
@@ -35,13 +73,24 @@ const GameBoardView = () => {
   return <GameGrid victoryState={victoryState} boardState={boardState} />;
 };
 
+const GameId = () => {
+  const id = useFieldValue({ source: "id" });
+  return <div className="game-infos">Game - id: {id}</div>;
+};
+
 export const GameShow = () => (
   <Show>
     <SimpleShowLayout>
-      <MatchupField />
+      <GameId></GameId>
+      <span className="RaLabeled-label">Players: </span>
+      <PlayerField playerNum={PlayerNum.p1} />
+      <PlayerField playerNum={PlayerNum.p2} />
+      <span className="RaLabeled-label">Match status: </span>
       <GameStatusField />
+      <span className="RaLabeled-label">Board game: </span>
       <GameBoardView />
       <TextField source="creation_date" />
+      <TextField source="last_update_date" />
     </SimpleShowLayout>
   </Show>
 );

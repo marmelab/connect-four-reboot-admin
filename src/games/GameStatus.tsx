@@ -1,7 +1,7 @@
 import { Box, Tooltip, Typography } from "@mui/material";
 import { useFieldValue } from "react-admin";
 
-const Status = {
+export const Status = {
   Ongoing: { label: "Ongoing", color: "#4CAF50" },
   Finished: { label: "Finished", color: "#9E9E9E" },
 } as const;

@@ -33,7 +33,6 @@ export const GameList = () => (
   <List filters={postFilters}>
     <Datagrid>
       <TextField source="id" />
-      <ShowButton />
       <TextField source="first_player" label="First player" />
       <TextField source="second_player" label="Second player" />
       <WrapperField label="Game status">
@@ -42,6 +41,7 @@ export const GameList = () => (
       <TextField source="winner" label="Winner" />
       <DateField source="creation_date" label="Game creation date" />
       <DateField source="last_update_date" label="Game last update date" />
+      <ShowButton />
     </Datagrid>
   </List>
 );

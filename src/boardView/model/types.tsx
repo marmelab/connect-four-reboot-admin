@@ -11,9 +11,3 @@ export interface VictoryState {
   fourLineCoordinates: Array<[Number, number]>;
   isDraw: boolean;
 }
-
-export interface VictoryState {
-  player: PlayerNum;
-  fourLineCoordinates: Array<[Number, number]>;
-  isDraw: boolean;
-}
