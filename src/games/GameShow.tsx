@@ -10,40 +10,38 @@ import Box from "@mui/material/Box/Box";
 const GameStatusField = () => {
   const gameStatus = useFieldValue({ source: "_game_status" });
   const victoryState = useFieldValue({ source: "_victory_state" });
-  const p1 = useFieldValue({ source: "first_player" });
-  const p2 = useFieldValue({ source: "second_player" });
-  const winner = victoryState.player === PlayerNum.p1 ? p1 : p2;
+  const winner = useFieldValue({ source: "winner" });
 
-  if (!gameStatus || !victoryState || !p1 || !p2) {
-    return "Loading game status field ...";
-  }
-
-  if (victoryState.isDraw) {
+  if (victoryState && victoryState.isDraw) {
     return (
       <Typography>
         <b>{gameStatus}</b> - it's a draw.
       </Typography>
     );
   }
-  if (gameStatus === Status.Finished.label) {
+  if (winner && gameStatus && gameStatus === Status.Finished.label) {
     return (
       <Typography>
         <b>{gameStatus}</b> - Winner: <b>{winner}</b>
       </Typography>
     );
   }
-  return (
-    <Typography>
-      <b>{gameStatus}</b>
-    </Typography>
-  );
+  if (gameStatus) {
+    return (
+      <Typography>
+        <b>{gameStatus}</b>
+      </Typography>
+    );
+  }
+
+  return "Loading game status ...";
 };
 
 const PlayerField = ({ playerNum }: { playerNum: PlayerNum }) => {
   const p1 = useFieldValue({ source: "first_player" });
   const p2 = useFieldValue({ source: "second_player" });
   if (!p1 || !p2) {
-    return "Laoding players ...";
+    return "Loading players ...";
   }
   return (
     <Tooltip title="player" placement="top">
