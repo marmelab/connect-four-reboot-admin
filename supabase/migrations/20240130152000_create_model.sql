@@ -35,5 +35,4 @@ CREATE TABLE IF NOT EXISTS games (
     second_player_id INT REFERENCES users(id) ON DELETE CASCADE,
     creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    game_state JSONB NOT NULL
-);
+    game_state  VARCHAR(255) NOT NULL
