@@ -47,7 +47,7 @@ const App = () => {
       <Resource
         name="games_view"
         list={GameList}
-        options={{ label: "Game" }}
+        options={{ label: "Games" }}
       ></Resource>
     </Admin>
   );
