@@ -1,10 +1,10 @@
 CREATE INDEX idx_games_winner ON games ((game_state->'victoryState'->>'player'));
 
 CREATE VIEW games_view AS
-    SELECT 
-        g.id, 
+    SELECT
+        g.id,
         g.first_player_id,
-        u1.username as first_player, 
+        u1.username as first_player,
         g.second_player_id,
         u2.username as second_player,
         g.game_state->'victoryState'->>'player' as winner_id,
