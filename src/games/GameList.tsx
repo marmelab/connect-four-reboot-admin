@@ -31,7 +31,7 @@ const postFilters = [
 
 export const GameList = () => (
   <List filters={postFilters}>
-    <Datagrid>
+    <Datagrid isRowSelectable={() => false}>
       <TextField source="id" />
       <TextField source="first_player" label="First player" />
       <TextField source="second_player" label="Second player" />

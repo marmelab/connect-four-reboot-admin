@@ -22,7 +22,7 @@ const postFilters = [
 
 export const UserList = () => (
   <List filters={postFilters}>
-    <Datagrid>
+    <Datagrid isRowSelectable={() => false}>
       <TextField source="id" />
       <TextField source="username" label="Username" />
       <TextField source="first_name" label="First name" />
