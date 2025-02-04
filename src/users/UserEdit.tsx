@@ -5,15 +5,25 @@ import {
   ReferenceInput,
   AutocompleteInput,
   email,
+  DeleteButton,
+  SaveButton,
+  Toolbar,
 } from "react-admin";
 
 const filterToQuery = (searchText: any) => ({
   "name@ilike": `%${searchText}%`,
 });
 
+const CustomToolbar = () => (
+  <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+    <SaveButton />
+    <DeleteButton redirect="/users_view" />
+  </Toolbar>
+);
+
 export const UserEdit = () => (
   <Edit resource="users" redirect="/users_view">
-    <SimpleForm>
+    <SimpleForm toolbar={<CustomToolbar />}>
       <TextInput source="username" label="Username" />
       <TextInput source="first_name" label="First Name" />
       <TextInput source="last_name" label="Last Name" />
