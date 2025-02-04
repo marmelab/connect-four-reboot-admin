@@ -1,6 +1,7 @@
 import {
   AutocompleteInput,
   Datagrid,
+  DateField,
   List,
   ReferenceField,
   ReferenceInput,
@@ -13,7 +14,7 @@ const filterToQuery = (searchText: any) => ({
 });
 
 const postFilters = [
-  <SearchInput source="username@ilike" alwaysOn />,
+  <SearchInput source="_user_infos@ilike" alwaysOn />,
   <ReferenceInput source="league_id" reference="leagues" alwaysOn>
     <AutocompleteInput filterToQuery={filterToQuery} optionText="name" />
   </ReferenceInput>,
@@ -30,6 +31,10 @@ export const UserList = () => (
       <ReferenceField source="league_id" reference="leagues">
         <TextField source="name" label="League name" />
       </ReferenceField>
+      <DateField
+        source="last_connection_date"
+        label="Last connection date"
+      ></DateField>
     </Datagrid>
   </List>
 );
