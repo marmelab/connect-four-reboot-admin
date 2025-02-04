@@ -11,6 +11,7 @@ import { createClient } from "@supabase/supabase-js";
 import { Box, Typography } from "@mui/material";
 import { GameShow } from "./games/GameShow";
 import { Route } from "react-router";
+import { UserList } from "./users/UserList";
 
 const instanceUrl =
   import.meta.env.VITE_SUPABASE_API_URL || "http://127.0.0.1:54321";
@@ -64,6 +65,11 @@ const App = () => {
         list={GameList}
         show={GameShow}
         options={{ label: "Games" }}
+      ></Resource>
+      <Resource
+        name="users_view"
+        list={UserList}
+        options={{ label: "Users" }}
       ></Resource>
       <CustomRoutes noLayout>
         <Route path={SetPasswordPage.path} element={<SetPasswordPage />} />
