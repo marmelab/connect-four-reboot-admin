@@ -13,8 +13,8 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") });
 const client = new pg.Client(process.env.SUPABASE_DB_URL);
 
 const generateSimpleUsername = () => {
-  const name = faker.person.firstName().toLowerCase().slice(0, 5); // Prénom en minuscule
-  const number = faker.number.int({ min: 10, max: 99 }); // Petit nombre
+  const name = faker.person.firstName().toLowerCase().slice(0, 5);
+  const number = faker.number.int({ min: 10, max: 99 });
   return `${name}${number}`;
 };
 
